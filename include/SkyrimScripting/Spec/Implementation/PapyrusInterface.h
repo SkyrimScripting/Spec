@@ -5,9 +5,7 @@
 namespace SkyrimScripting::Spec::Implementation::PapyrusInterface {
 
     void Specification_Print(RE::BSScript::Internal::VirtualMachine*, const RE::VMStackID stackID, RE::Actor*, std::string text) {
-        auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
-        auto stack = vm->allRunningStacks.find(stackID);
-        auto scriptName = stack->second->top->previousFrame->self.GetObject()->GetTypeInfo()->GetName();
+        auto scriptName = RE::BSScript::Internal::VirtualMachine::GetSingleton()->allRunningStacks.find(stackID)->second->top->previousFrame->self.GetObject()->GetTypeInfo()->GetName();
         TestOutput::GetSingleton().Output(std::format("[{}] {}", scriptName, text));
     }
 
