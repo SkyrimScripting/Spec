@@ -1,3 +1,5 @@
-# Unit Testing Framework
+# Spec
 
-![Unit Testing Framework](Images/UnitTests_Logo.png)
+> Skyrim Testing Framework for Papyrus Scripts
+
+![Spec](Images/Spec_Dark.png)
