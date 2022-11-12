@@ -12,14 +12,11 @@
     <Variables>
         <Variable Name="ModName" Value="SchlongBasedBodies" />
         <Variable Name="Mods" Value="C:\Users\mrowr\Dropbox\Skyrim\Purrrect Modlist\Mods" />
+        <Variable Name="SkyrimScripting" Value="C:\Users\mrowr\Dropbox\Skyrim\Purrrect Modlist\Mods\Skyrim Scripting -" />
         <Variable Name="Imports" Value="C:\Users\mrowr\Dropbox\Skyrim\Papyrus Imports" />
     </Variables>
     <Imports>
-        <Import>@Mods\[SE] No .esp\Scripts\Source</Import>
-        <Import>@Imports\JContainers</Import>
-        <Import>@Imports\SkyUI</Import>
-        <Import>@Imports\SKSE</Import>
-        <Import>@Imports\UIExtensions</Import>
+        <Import>@SkyrimScripting Console\Scripts\Source</Import>
         <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Scripts\Source</Import>
     </Imports>
     <Folders>
