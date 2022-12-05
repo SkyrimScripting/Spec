@@ -1,10 +1,11 @@
 // GoogleTest documentation
 // http://google.github.io/googletest/primer.html
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 TEST(MyTestSuite, HelloWorld) { EXPECT_EQ(69, 420); }
 
+// Providing your own main() function with GoogleTest
 // http://google.github.io/googletest/primer.html#writing-the-main-function
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
