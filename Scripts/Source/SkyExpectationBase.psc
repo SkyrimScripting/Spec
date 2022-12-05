@@ -1,0 +1,3 @@
+scriptName SkyExpectationBase extends ObjectReference ; TODO - extends PapyrusScript or SkyrimScript
+
+; ExpectationBase function GetNew() global native ; Or something like this...

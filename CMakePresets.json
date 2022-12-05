@@ -10,7 +10,7 @@
             "name": "base",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE"
+                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DNOMINMAX -DUNICODE -D_UNICODE"
             }
         },
         {
