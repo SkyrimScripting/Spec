@@ -14,6 +14,7 @@ option(DEPLOY_MOD "Copy mod .dll and resource into %SKYRIM_MODS_DEPLOY_ROOT%\\${
 
 find_package(CommonLibSSE CONFIG REQUIRED)
 
-# add_subdirectory(SkyrimScripting.Reflection)
-# add_subdirectory(SkyrimScripting.Reflection.Plugin)
+add_subdirectory(SkyrimScripting.Spec)
+add_subdirectory(SkyrimScripting.Spec.Runner)
+add_subdirectory(Examples)
 # add_subdirectory(spec)
