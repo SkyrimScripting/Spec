@@ -1,16 +1,12 @@
 {
     "version": 2,
-    "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 21,
-        "patch": 0
-    },
+    "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
     "configurePresets": [
         {
-            "name": "base",
+            "name": "flags",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DNOMINMAX -DUNICODE -D_UNICODE"
+                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS"
             }
         },
         {
@@ -24,25 +20,14 @@
             }
         },
         {
-            "name": "win32",
-            "hidden": true
-        },
-        {
-            "name": "win32-unicode",
-            "hidden": true,
-            "inherits": "win32"
-        },
-        {
             "name": "x64",
             "hidden": true,
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            }
+            "architecture": { "value": "x64", "strategy": "external" }
         },
         {
             "name": "msvc",
             "hidden": true,
+            "generator": "Visual Studio 17 2022",
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "intelliSenseMode": "windows-msvc-x64",
@@ -52,58 +37,51 @@
             }
         },
         {
-            "name": "build-debug-msvc",
-            "inherits": [
-                "base",
-                "vcpkg",
-                "win32-unicode",
-                "x64",
-                "msvc"
-            ],
-            "displayName": "Debug",
-            "description": "Debug build for testing.",
-            "generator": "Visual Studio 17 2022",
-            "binaryDir": "${sourceDir}/build/debug-msvc",
+            "name": "mod-deploy",
+            "hidden": true,
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": {
-                    "type": "STRING",
-                    "value": "Debug"
-                }
+                "DEPLOY_MOD": { "type": "BOOL", "value": "ON" },
+                "DEPLOY_ROOT": { "type": "STRING", "value": "$env{SKYRIM_MODS_DEPLOY_ROOT}" }
             }
         },
         {
-            "name": "build-release-msvc",
-            "inherits": [
-                "base",
-                "vcpkg",
-                "win32-unicode",
-                "x64",
-                "msvc"
-            ],
+            "name": "base-configuration",
+            "hidden": true,
+            "inherits": [ "flags", "vcpkg", "x64", "msvc" ]
+        },
+        {
+            "name": "debug-configuration",
+            "inherits": [ "base-configuration" ],
+            "displayName": "Debug",
+            "description": "Debug build",
+            "binaryDir": "${sourceDir}/build/Debug",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Debug" }}
+        },
+        {
+            "name": "debug-configuration-deploy",
+            "inherits": ["debug-configuration", "mod-deploy"],
+            "displayName": "Debug + Deploy",
+            "description": "Debug and copy .dll and mod resources to SKYRIM_MODS"
+        },
+        {
+            "name": "release-configuration",
+            "inherits": [ "base-configuration" ],
             "displayName": "Release",
-            "description": "Optimized release build.",
-            "generator": "Visual Studio 17 2022",
-            "binaryDir": "${sourceDir}/build/release-msvc",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": {
-                    "type": "STRING",
-                    "value": "Release"
-                }
-            }
+            "description": "Release build",
+            "binaryDir": "${sourceDir}/build/Release",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Release" }}
+        },
+        {
+            "name": "release-configuration-deploy",
+            "inherits": ["release-configuration", "mod-deploy"],
+            "displayName": "Release + Deploy",
+            "description": "Release and copy .dll and mod resources to SKYRIM_MODS"
         }
     ],
     "buildPresets": [
-        {
-            "name": "release-msvc",
-            "displayName": "Release (MSVC)",
-            "configurePreset": "build-release-msvc",
-            "description": "Optimized release build."
-        },
-        {
-            "name": "debug-msvc",
-            "displayName": "Debug (MSVC)",
-            "configurePreset": "build-debug-msvc",
-            "description": "Debug build for testing."
-        }
+        { "name": "build-debug", "displayName": "Debug", "configurePreset": "debug-configuration" },
+        { "name": "build-debug-deploy", "displayName": "Debug Deploy", "configurePreset": "debug-configuration-deploy" },
+        { "name": "build-release", "displayName": "Release", "configurePreset": "release-configuration" },
+        { "name": "build-release-deploy", "displayName": "Release Deploy", "configurePreset": "release-configuration-deploy" }
     ]
 }

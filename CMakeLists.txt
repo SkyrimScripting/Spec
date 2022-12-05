@@ -1,37 +1,19 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(SkyrimScripting.Spec VERSION 0.0.1 LANGUAGES CXX)
+project(SkyrimScripting.Spec.AllProjects VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-add_compile_definitions(UNICODE _UNICODE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+
+option(DEPLOY_MOD "Copy mod .dll and resource into %SKYRIM_MODS_DEPLOY_ROOT%\\${PROJECT_NAME}" OFF)
+
+# Override <DEPLOY_ROOT> to set the path of a mod to deploy files to.
+# The SKSE plugin files will be writen to <DEPLOY_ROOT>/<PROJECT_NAME>/SKSE/Plugins
+# You can use the environment variable SKYRIM_MODS_DEPLOY_ROOT to set a default <DEPLOY_ROOT>
+# set(DEPLOY_ROOT "C:/some/path/to/mod/path")
 
 find_package(CommonLibSSE CONFIG REQUIRED)
 
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*.h include/*.h)
-
-add_commonlibsse_plugin(${PROJECT_NAME} SOURCES ${SOURCE_FILES})
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
-include_directories(${PROJECT_NAME} include)
-
-# SkyrimScripting Plugin helpers
-target_include_directories(${PROJECT_NAME} PRIVATE "$ENV{SkyrimScriptingProjectRoot}Plugin/include")
-target_precompile_headers(${PROJECT_NAME} PUBLIC "$ENV{SkyrimScriptingProjectRoot}Plugin/include/SkyrimScripting/Plugins/PCH.h")
-
-enable_testing()
-set(TEST_PROJECT_NAME ${PROJECT_NAME}.Tests)
-file(GLOB_RECURSE UNIT_TESTS_SOURCE test/*.cpp test/*.h)
-add_executable(${TEST_PROJECT_NAME} ${UNIT_TESTS_SOURCE})
-include_directories(${TEST_PROJECT_NAME} include)
-find_path(BANDIT_INCLUDE_DIRS "bandit/adapters.h")
-target_include_directories(${TEST_PROJECT_NAME} PRIVATE ${BANDIT_INCLUDE_DIRS})
-find_path(SNOWHOUSE_INCLUDE_DIRS "snowhouse/assert.h")
-target_include_directories(${TEST_PROJECT_NAME} PRIVATE ${SNOWHOUSE_INCLUDE_DIRS})
-
-add_custom_command(
-	TARGET "${PROJECT_NAME}"
-	POST_BUILD
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:${PROJECT_NAME}>" "${PROJECT_SOURCE_DIR}/SKSE/Plugins/$<TARGET_FILE_NAME:${PROJECT_NAME}>"
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_PDB_FILE:${PROJECT_NAME}>" "${PROJECT_SOURCE_DIR}/SKSE/Plugins/$<TARGET_PDB_FILE_NAME:${PROJECT_NAME}>"
-	VERBATIM
-)
+# add_subdirectory(SkyrimScripting.Reflection)
+# add_subdirectory(SkyrimScripting.Reflection.Plugin)
+# add_subdirectory(spec)
