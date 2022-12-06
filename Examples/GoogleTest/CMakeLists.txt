@@ -11,6 +11,7 @@ find_package(GTest CONFIG REQUIRED)
 add_commonlibsse_plugin(${PROJECT_NAME} SOURCES tests.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest)
 target_link_libraries(${PROJECT_NAME} PRIVATE CommonLibSSE::CommonLibSSE)
+target_link_libraries(${PROJECT_NAME} PRIVATE SkyrimScripting.Spec)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
 target_precompile_headers(${PROJECT_NAME} PRIVATE PCH.h)
 
