@@ -1,11 +1,6 @@
 # Spec
 
-> Skyrim Testing Framework for Papyrus Scripts
-
-> - `S`kyrim
-> - `P`apyrus
-> - `E`xcellence
-> - `C`hecker
+> Skyrim Testing Framework
 
 ![Spec](Images/Spec_Dark.png)
 
