@@ -18,6 +18,11 @@
 // frameworks, which doesn't allow the auto-detection to work for this project)
 #include <SkyrimScripting/Spec/GoogleTest.h>
 
+// TODO MAKE MACROS FOR THIS!!!!
+// SKYRIM_IMMEDIATE_TEST()
+// SKYRIM_...
+//
+
 TEST(SpecRunImmediate_TestSuite, CanGetPluginName) {
 	// Getting the PluginDeclaration only works when the game is running
 	// but it doens't have any other dependencies
