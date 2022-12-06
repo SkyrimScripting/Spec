@@ -10,7 +10,13 @@
 // Specify via #define or set the SPEC_GAME_START_SCRIPT environment variable
 // #define SPEC_GAME_START_SCRIPT R"(C:\Code\Skyrim Scripting Projects\Spec\coc)"
 
-#include <SkyrimScripting/Spec.h>
+// This will auto-detect your test framework with support for
+// GoogleTest, Catch2, doctest, and Bandit:
+// #include <SkyrimScripting/Spec.h>
+
+// Using explicit include (only because we import every vcpkg for all test
+// frameworks, which doesn't allow the auto-detection to work for this project)
+#include <SkyrimScripting/Spec/GoogleTest.h>
 
 TEST(SpecRunImmediate_TestSuite, CanGetPluginName) {
 	// Getting the PluginDeclaration only works when the game is running
@@ -25,38 +31,9 @@ TEST(SpecRunModsLoaded_TestSuite, CanGetTheNameOfAQuest) {
 	EXPECT_STREQ(mainQuest->GetName(), "Unbound");
 }
 
-TEST(SpecRunModsLoaded_TestSuite, CanGetReturnTypeOfPapyrusFunction) {
-	// Interacting with the VM... hmm... let's find out?
-	// Actually, this works without the game running because it's only introspection.
-	auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
-	ASSERT_TRUE(vm != nullptr);
-
-	RE::BSTSmartPointer<RE::BSScript::ObjectTypeInfo> typeInfo;
-	vm->GetScriptObjectType("Actor", typeInfo);
-	ASSERT_TRUE(typeInfo.get() != nullptr);
-
-	auto* functions = typeInfo.get()->GetMemberFuncIter();
-	auto functionCount = typeInfo.get()->GetNumMemberFuncs();
-	auto functionName = RE::BSFixedString("GetCrimeFaction");
-	RE::BSTSmartPointer<RE::BSScript::IFunction> Actor_getCrimeFaction;
-	for (uint32_t i = 0; i < functionCount; i++) {
-		if (functions[i].func->GetName() == functionName) {
-			Actor_getCrimeFaction = functions[i].func;
-			break;
-		}
-	}
-	ASSERT_TRUE(Actor_getCrimeFaction.get() != nullptr);
-
-	// Actor.GetCrimeFaction returns a Faction
-	ASSERT_STREQ(Actor_getCrimeFaction.get()->GetReturnType().GetTypeInfo()->GetName(), "Faction");
-}
-
-TEST(SpecRunGameStart_TestSuite, CanGetPlayersCurrentLocation) {
-	// Get the player's current location? Hmm, it probably has a default?
+TEST(SpecRunGameStart_TestSuite, CanGetPlayerCurrentLocation) {
+	// Can only get the player's current location if the game is running
 	auto* player = RE::TESForm::LookupByID(0x14)->As<RE::TESObjectREFR>();
-	EXPECT_TRUE(player != nullptr);
-
 	auto location = player->GetCurrentLocation();
-	EXPECT_TRUE(location != nullptr);
 	EXPECT_STREQ(location->GetFullName(), "Riverwood");
 }
