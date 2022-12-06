@@ -8,14 +8,11 @@ project(SkyrimScripting.Spec.Example.GoogleTest VERSION 0.0.1 LANGUAGES CXX)
 
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(${PROJECT_NAME} tests.cpp)
+add_commonlibsse_plugin(${PROJECT_NAME} SOURCES tests.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest)
 target_link_libraries(${PROJECT_NAME} PRIVATE CommonLibSSE::CommonLibSSE)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
 target_precompile_headers(${PROJECT_NAME} PRIVATE PCH.h)
-
-# add_commonlibsse_plugin(${PROJECT_NAME} SOURCES tests.cpp)
-# target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
-# target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest)
 
 if(DEPLOY_MOD)
 	if(EXISTS "${DEPLOY_ROOT}")
