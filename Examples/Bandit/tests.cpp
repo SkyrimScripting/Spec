@@ -12,9 +12,14 @@ using namespace snowhouse;
 
 // clang-format off
 go_bandit([](){
-	describe("My Test Suite", [](){
+	describe("First Test Suite", [](){
 		it("hello world", [](){
 			AssertThat(69, Equals(420));
+		});
+	});
+	describe("Second Test Suite", [](){
+		it("goodnight moon", [](){
+			AssertThat(111, Equals(222));
 		});
 	});
 });
@@ -22,4 +27,14 @@ go_bandit([](){
 
 // Providing your own main() function with bandit
 // https://banditcpp.github.io/bandit/writingtests.html#entry-point
-int main(int argc, char **argv) { return bandit::run(argc, argv); }
+int main(int _argc, char** _argv) {
+	// bandit command-line options
+	// https://banditcpp.github.io/bandit/runningtests.html
+	std::vector<std::string> args = {"", "--only=First", "--reporter=spec", "--colorizer=off"};
+
+	// Generate `argc` and `argv`, combining inputs with `args` specified above.
+	std::vector<char*> argv{_argv + 1, _argv + _argc};
+	for (const auto& arg : args) argv.push_back((char*)arg.data());
+
+	return bandit::run((int)argv.size(), argv.data());
+}
