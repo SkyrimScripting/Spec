@@ -20,3 +20,10 @@ endFunction
 
 function TestShouldFail() global
 endFunction
+
+function JustCallTheSpecHelper() global
+    Debug.MessageBox("HELLO?")
+    Utility.Wait(5)
+    ; SkySpecRunnerSpecHelper.EventHappened("Hello, one event!")
+    ; SkySpecRunnerSpecHelper.EventHappened("Also, another event!")
+endFunction

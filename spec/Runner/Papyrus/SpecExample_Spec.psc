@@ -12,3 +12,7 @@ endFunction
 
 function TestShouldFail()
 endFunction
+
+function JustCallTheSpecHelper()
+    SkySpecRunnerSpecHelper.EventHappened("Hello from instance! " + self)
+endFunction

@@ -25,7 +25,8 @@ namespace SkyrimScripting::Spec::Plugin {
 				std::cout << "Runnings SpecRunGameStart tests" << std::endl;
 				SPEC_ADAPTER::RunSpecs(GetTestFilterForEvent(TestRunEvent::GameStarted));
 #if defined(SPEC_EXIT_AFTER_RUN)
-				SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
+				std::cout << "Tests complete. Exiting. (Not exiting temporarily tho...)" << std::endl;
+// SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
 #endif
 			}
 			return RE::BSEventNotifyControl::kContinue;
