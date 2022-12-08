@@ -19,15 +19,14 @@ namespace SkyrimScripting::Spec::Plugin {
 			return singleton;
 		}
 
-		RE::BSEventNotifyControl ProcessEvent(const RE::TESCellFullyLoadedEvent*,
-											  RE::BSTEventSource<RE::TESCellFullyLoadedEvent>*) override {
+		RE::BSEventNotifyControl ProcessEvent(const RE::TESCellFullyLoadedEvent*, RE::BSTEventSource<RE::TESCellFullyLoadedEvent>*) override {
 			if (!loaded.exchange(true)) {
 				std::cout << "Runnings SpecRunGameStart tests" << std::endl;
-				SPEC_ADAPTER::RunSpecs(GetTestFilterForEvent(TestRunEvent::GameStarted));
-#if defined(SPEC_EXIT_AFTER_RUN)
-				std::cout << "Tests complete. Exiting. (Not exiting temporarily tho...)" << std::endl;
-// SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
-#endif
+				// SPEC_ADAPTER::RunSpecs(GetTestFilterForEvent(TestRunEvent::GameStarted));
+				// #if defined(SPEC_EXIT_AFTER_RUN)
+				// std::cout << "Tests complete. Exiting. (Not exiting temporarily tho...)" << std::endl;
+				// SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
+				// #endif
 			}
 			return RE::BSEventNotifyControl::kContinue;
 		}
