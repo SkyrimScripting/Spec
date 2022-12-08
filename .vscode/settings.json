@@ -89,6 +89,7 @@
         "xutility": "cpp",
         "any": "cpp",
         "csignal": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "future": "cpp"
     }
 }

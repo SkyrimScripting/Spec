@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "SkyrimScripting/Spec/Runner/DiscoveredPapyrusSpecs.h"
 #include "SkyrimScripting/Spec/Runner/SpecLookup.h"
 #include "SkyrimScripting/Spec/Runner/GameLoadedEvent.h"

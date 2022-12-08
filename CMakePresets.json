@@ -1,14 +1,11 @@
 {
     "version": 2,
-    "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
     "configurePresets": [
-        {
-            "name": "flags",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS"
-            }
-        },
         {
             "name": "vcpkg",
             "hidden": true,
@@ -22,12 +19,18 @@
         {
             "name": "x64",
             "hidden": true,
-            "architecture": { "value": "x64", "strategy": "external" }
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            }
         },
         {
             "name": "msvc",
             "hidden": true,
             "generator": "Visual Studio 17 2022",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS"
+            },
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "intelliSenseMode": "windows-msvc-x64",
@@ -37,51 +40,157 @@
             }
         },
         {
+            "name": "clang",
+            "hidden": true,
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "CMAKE_CXX_FLAGS": "/std:c++20 /permissive- /EHsc -Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -D__cpp_lib_char8_t -D__cpp_consteval -D__cpp_lib_format -D_CRT_SECURE_NO_WARNINGS -DCMAKE_EXPORT_COMPILE_COMMANDS"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64",
+                    "enableMicrosoftCodeAnalysis": true,
+                    "enableClangTidyCodeAnalysis": true
+                }
+            }
+        },
+        {
             "name": "mod-deploy",
             "hidden": true,
             "cacheVariables": {
-                "DEPLOY_MOD": { "type": "BOOL", "value": "ON" },
-                "DEPLOY_ROOT": { "type": "STRING", "value": "$env{SKYRIM_MODS_DEPLOY_ROOT}" }
+                "DEPLOY_MOD": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "DEPLOY_ROOT": {
+                    "type": "STRING",
+                    "value": "$env{SKYRIM_MODS_DEPLOY_ROOT}"
+                }
             }
         },
         {
             "name": "base-configuration",
             "hidden": true,
-            "inherits": [ "flags", "vcpkg", "x64", "msvc" ]
+            "inherits": [
+                "vcpkg",
+                "x64",
+                "msvc"
+            ]
+        },
+        {
+            "name": "clang-base-configuration",
+            "hidden": true,
+            "inherits": [
+                "vcpkg",
+                "x64",
+                "clang"
+            ]
         },
         {
             "name": "debug-configuration",
-            "inherits": [ "base-configuration" ],
+            "inherits": [
+                "base-configuration"
+            ],
             "displayName": "Debug",
             "description": "Debug build",
             "binaryDir": "${sourceDir}/build/Debug",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Debug" }}
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Debug"
+                }
+            }
         },
         {
             "name": "debug-configuration-deploy",
-            "inherits": ["debug-configuration", "mod-deploy"],
+            "inherits": [
+                "debug-configuration",
+                "mod-deploy"
+            ],
             "displayName": "Debug + Deploy",
             "description": "Debug and copy .dll and mod resources to SKYRIM_MODS"
         },
         {
             "name": "release-configuration",
-            "inherits": [ "base-configuration" ],
+            "inherits": [
+                "base-configuration"
+            ],
             "displayName": "Release",
             "description": "Release build",
             "binaryDir": "${sourceDir}/build/Release",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Release" }}
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Release"
+                }
+            }
         },
         {
             "name": "release-configuration-deploy",
-            "inherits": ["release-configuration", "mod-deploy"],
+            "inherits": [
+                "release-configuration",
+                "mod-deploy"
+            ],
             "displayName": "Release + Deploy",
             "description": "Release and copy .dll and mod resources to SKYRIM_MODS"
+        },
+        {
+            "name": "clang-debug-configuration",
+            "inherits": [
+                "clang-base-configuration"
+            ],
+            "displayName": "Clang Debug",
+            "description": "Clang Debug build",
+            "binaryDir": "${sourceDir}/build/Debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Debug"
+                }
+            }
+        },
+        {
+            "name": "clang-debug-configuration-deploy",
+            "inherits": [
+                "clang-debug-configuration",
+                "mod-deploy"
+            ],
+            "displayName": "Clang Debug + Deploy",
+            "description": "Debug and copy .dll and mod resources to SKYRIM_MODS"
         }
     ],
     "buildPresets": [
-        { "name": "build-debug", "displayName": "Debug", "configurePreset": "debug-configuration" },
-        { "name": "build-debug-deploy", "displayName": "Debug Deploy", "configurePreset": "debug-configuration-deploy" },
-        { "name": "build-release", "displayName": "Release", "configurePreset": "release-configuration" },
-        { "name": "build-release-deploy", "displayName": "Release Deploy", "configurePreset": "release-configuration-deploy" }
+        {
+            "name": "build-debug",
+            "displayName": "Debug",
+            "configurePreset": "debug-configuration"
+        },
+        {
+            "name": "build-debug-deploy",
+            "displayName": "Debug Deploy",
+            "configurePreset": "debug-configuration-deploy"
+        },
+        {
+            "name": "build-release",
+            "displayName": "Release",
+            "configurePreset": "release-configuration"
+        },
+        {
+            "name": "build-release-deploy",
+            "displayName": "Release Deploy",
+            "configurePreset": "release-configuration-deploy"
+        },
+        {
+            "name": "clang-build-debug",
+            "displayName": "Clang Debug",
+            "configurePreset": "clang-debug-configuration"
+        },
+        {
+            "name": "clang-build-debug-deploy",
+            "displayName": "Clang Debug Deploy",
+            "configurePreset": "clang-debug-configuration-deploy"
+        }
     ]
 }
