@@ -1,7 +1,7 @@
 ---
 AccessModifierOffset: -4
 BasedOnStyle: Google
-ColumnLimit: 180
+ColumnLimit: 120
 IndentWidth: '4'
 NamespaceIndentation: All
 TabWidth: '4'

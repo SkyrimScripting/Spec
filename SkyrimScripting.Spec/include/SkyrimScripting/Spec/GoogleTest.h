@@ -1,13 +1,13 @@
 #pragma once
 
-#include "SkyrimScripting/Spec/GoogleTest/SpecRunner.h"
-#define SPEC_ADAPTER GoogleTest
+#include "SkyrimScripting/Spec/Config.h"
 #include "SkyrimScripting/Spec/GoogleTest/Macros.h"
+#include "SkyrimScripting/Spec/GoogleTest/SpecRunner.h"
+#include "SkyrimScripting/Spec/Internal/FunctionRunner.h"
 #include "SkyrimScripting/Spec/Plugin.h"
 
-class Haha {
-public:
-	Haha() { SkyrimScripting::Spec::Plugin::Configuration::TestCaseRunFunction = SkyrimScripting::Spec::GoogleTest::RunSpecs; }
-};
-
-Haha h;
+namespace SkyrimScripting::Spec::GoogleTest {
+	namespace {
+		Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = GoogleTest::RunSpecs; }};
+	}
+}
