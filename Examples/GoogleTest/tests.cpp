@@ -1,14 +1,9 @@
 // GoogleTest documentation
 // http://google.github.io/googletest/primer.html
 
-#define SPEC_RUN_IMMEDIATE
-// #define SPEC_RUN_PLUGINS_LOADED
-// #define SPEC_RUN_MODS_LOADED
-// #define SPEC_RUN_GAME_STARTED
-#define SPEC_EXIT_AFTER_RUN
-
-// Specify via #define or set the SPEC_GAME_START_SCRIPT environment variable
-// #define SPEC_GAME_START_SCRIPT R"(C:\Code\Skyrim Scripting Projects\Spec\coc)"
+// To automatically run code on the Main Menu, you set set the SPEC_GAME_START_SCRIPT environment variable
+// to an executable (e.g. a .bat file) or specify a path using the `spec_game_start_script` macro:
+// spec_game_start_script("C:/path/to/main_manu.bat");
 
 // This will auto-detect your test framework with support for
 // GoogleTest, Catch2, doctest, and Bandit:
@@ -17,6 +12,8 @@
 // Using explicit include (only because we import every vcpkg for all test
 // frameworks, which doesn't allow the auto-detection to work for this project)
 #include <SkyrimScripting/Spec/GoogleTest.h>
+
+spec_exit_after_tests;
 
 TEST_IMMEDIATE_CASE(CanGetPluginName) {
 	// Getting the PluginDeclaration only works when the game is running

@@ -2,6 +2,9 @@
 
 #include <atomic>
 
+#include "SkyrimScripting/Spec/Config.h"
+#include "SkyrimScripting/Spec/Plugin/TestRunEvent.h"
+
 namespace SkyrimScripting::Spec::Plugin {
 
 	class CellFullyLoadedEventSink : public RE::BSTEventSink<RE::TESCellFullyLoadedEvent> {
@@ -23,11 +26,11 @@ namespace SkyrimScripting::Spec::Plugin {
 											  RE::BSTEventSource<RE::TESCellFullyLoadedEvent>*) override {
 			if (!loaded.exchange(true)) {
 				std::cout << "Runnings SpecRunGameStart tests" << std::endl;
-				SPEC_ADAPTER::RunSpecs(GetTestFilterForEvent(TestRunEvent::GameStarted));
-#if defined(SPEC_EXIT_AFTER_RUN)
-				std::cout << "Tests complete. Exiting. (Not exiting temporarily tho...)" << std::endl;
-// SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
-#endif
+				Config::TestCaseRunFunction(GetTestFilterForEvent(TestRunEvent::GameStarted));
+				if (Config::ExitGameAfterSpecs) {
+					std::cout << "Exiting Skyrim." << std::endl;
+					SKSE::WinAPI::TerminateProcess(SKSE::WinAPI::GetCurrentProcess(), EXIT_SUCCESS);
+				}
 			}
 			return RE::BSEventNotifyControl::kContinue;
 		}
