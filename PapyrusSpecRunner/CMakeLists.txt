@@ -1,4 +1,4 @@
-project(SkyrimScripting.Spec.Runner VERSION 0.0.1 LANGUAGES CXX)
+project(PapyrusSpecRunner VERSION 0.0.1 LANGUAGES CXX)
 
 add_commonlibsse_plugin(
     ${PROJECT_NAME}
