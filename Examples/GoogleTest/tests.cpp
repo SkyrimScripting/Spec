@@ -16,21 +16,21 @@
 spec_exit_after_tests;
 
 TEST_IMMEDIATE_CASE(CanGetPluginName) {
-	// Getting the PluginDeclaration only works when the game is running
-	// but it doens't have any other dependencies
-	auto pluginName = SKSE::PluginDeclaration::GetSingleton()->GetName();
-	EXPECT_EQ(pluginName, "SkyrimScripting.Spec.Example.GoogleTest");
+    // Getting the PluginDeclaration only works when the game is running
+    // but it doens't have any other dependencies
+    auto pluginName = SKSE::PluginDeclaration::GetSingleton()->GetName();
+    EXPECT_EQ(pluginName, "SkyrimScripting.Spec.Example.GoogleTest");
 }
 
 TEST_MODS_LOADED_CASE(CanGetTheNameOfAQuest) {
-	// Querying for Forms breaks unless mods data has been loaded (kDataLoaded)
-	auto* mainQuest = RE::TESForm::LookupByEditorID("MQ101");
-	EXPECT_STREQ(mainQuest->GetName(), "Unbound");
+    // Querying for Forms breaks unless mods data has been loaded (kDataLoaded)
+    auto* mainQuest = RE::TESForm::LookupByEditorID("MQ101");
+    EXPECT_STREQ(mainQuest->GetName(), "Unbound");
 }
 
 TEST_GAME_STARTED_CASE(CanGetPlayerCurrentLocation) {
-	// Can only get the player's current location if the game is running
-	auto* player = RE::TESForm::LookupByID(0x14)->As<RE::TESObjectREFR>();
-	auto location = player->GetCurrentLocation();
-	EXPECT_STREQ(location->GetFullName(), "Riverwood");
+    // Can only get the player's current location if the game is running
+    auto* player = RE::TESForm::LookupByID(0x14)->As<RE::TESObjectREFR>();
+    auto location = player->GetCurrentLocation();
+    EXPECT_STREQ(location->GetFullName(), "Riverwood");
 }

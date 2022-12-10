@@ -19,33 +19,33 @@
 spec_exit_after_tests;
 
 go_spec_immediate([]() {
-	describe("Example specs", []() {
-		it("can get plugin name", [&]() {
-			// Getting the PluginDeclaration only works when the game is running
-			// but it doens't have any other dependencies
-			auto pluginName = SKSE::PluginDeclaration::GetSingleton()->GetName();
-			AssertThat(pluginName, Equals("SkyrimScripting.Spec.Example.Bandit"));
-		});
-	});
+    describe("Example specs", []() {
+        it("can get plugin name", [&]() {
+            // Getting the PluginDeclaration only works when the game is running
+            // but it doens't have any other dependencies
+            auto pluginName = SKSE::PluginDeclaration::GetSingleton()->GetName();
+            AssertThat(pluginName, Equals("SkyrimScripting.Spec.Example.Bandit"));
+        });
+    });
 });
 
 go_spec_on_mods_load([]() {
-	describe("Example specs", []() {
-		it("can get the name of a quest", [&]() {
-			// Querying for Forms breaks unless mods data has been loaded (kDataLoaded)
-			auto* mainQuest = RE::TESForm::LookupByEditorID("MQ101");
-			AssertThat(mainQuest->GetName(), Equals("Unbound"));
-		});
-	});
+    describe("Example specs", []() {
+        it("can get the name of a quest", [&]() {
+            // Querying for Forms breaks unless mods data has been loaded (kDataLoaded)
+            auto* mainQuest = RE::TESForm::LookupByEditorID("MQ101");
+            AssertThat(mainQuest->GetName(), Equals("Unbound"));
+        });
+    });
 });
 
 go_spec_on_game_start([]() {
-	describe("Example specs", []() {
-		it("can get player current location", [&]() {
-			// Can only get the player's current location if the game is running
-			auto* player = RE::TESForm::LookupByID(0x14)->As<RE::TESObjectREFR>();
-			auto location = player->GetCurrentLocation();
-			AssertThat(location->GetFullName(), Equals("Riverwood"));
-		});
-	});
+    describe("Example specs", []() {
+        it("can get player current location", [&]() {
+            // Can only get the player's current location if the game is running
+            auto* player = RE::TESForm::LookupByID(0x14)->As<RE::TESObjectREFR>();
+            auto location = player->GetCurrentLocation();
+            AssertThat(location->GetFullName(), Equals("Riverwood"));
+        });
+    });
 });

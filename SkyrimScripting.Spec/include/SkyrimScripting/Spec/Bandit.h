@@ -9,9 +9,9 @@
 #include "SkyrimScripting/Spec/Plugin.h"
 
 namespace SkyrimScripting::Spec::Bandit {
-	namespace {
-		Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = Bandit::RunSpecs; }};
-	}
+    namespace {
+        Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = Bandit::RunSpecs; }};
+    }
 }
 
 // using namespace SkyrimScripting::Spec::Bandit;

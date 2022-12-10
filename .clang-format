@@ -5,7 +5,7 @@ ColumnLimit: 120
 IndentWidth: '4'
 NamespaceIndentation: All
 TabWidth: '4'
-UseTab: Always
+UseTab: Never
 IndentPPDirectives: BeforeHash
 FixNamespaceComments: false
 

@@ -4,5 +4,5 @@
 #include <string>
 
 namespace SkyrimScripting::Spec::Runner {
-	std::set<std::string> DiscoveredPapyrusSpecScriptNames;
+    std::set<std::string> DiscoveredPapyrusSpecScriptNames;
 }
