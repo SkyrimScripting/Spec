@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <set>
 
-namespace SkyrimScripting::Spec::Runner {
+namespace SkyrimScripting::Spec::PapyrusSpecRunner {
 
     std::set<std::string> GetAllSpecScriptNames() {
         std::set<std::string> names;

@@ -1,4 +1,4 @@
-project(SkyrimScripting.Spec.Specs VERSION 0.0.1 LANGUAGES CXX)
+project(PapyrusSpecRunner.Specs VERSION 0.0.1 LANGUAGES CXX)
 
 find_path(BANDIT_INCLUDE_DIRS "bandit/adapters.h")
 find_path(SNOWHOUSE_INCLUDE_DIRS "snowhouse/assert.h")

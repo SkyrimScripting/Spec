@@ -41,8 +41,7 @@ namespace SkyrimScripting::Spec::Plugin {
         if (!Config::RunSpecsAfterGameStart()) TryExitSkyrim();
     }
 
-    void RunSpecsAfterGameStart() {
-        if (!Config::RunSpecsAfterGameStart()) return;
+    void TryRunGameStartScript() {
         if (!Config::PathToScriptToRunOnMainMenuLoad.empty()) {
             std::cout << std::format("Running game start script: '{}'", Config::PathToScriptToRunOnMainMenuLoad)
                       << std::endl;
@@ -56,6 +55,11 @@ namespace SkyrimScripting::Spec::Plugin {
                 std::cout << "No game start script found" << std::endl;
             }
         }
+    }
+
+    void RunSpecsAfterGameStart() {
+        if (!Config::RunSpecsAfterGameStart()) return;
+        TryRunGameStartScript();
     }
 
     void RunSpecs() {

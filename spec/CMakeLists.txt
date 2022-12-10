@@ -1,1 +1,1 @@
-add_subdirectory(Runner)
+add_subdirectory(PapyrusSpecRunner)

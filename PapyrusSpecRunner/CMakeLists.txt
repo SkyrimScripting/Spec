@@ -6,12 +6,9 @@ add_commonlibsse_plugin(
     SOURCES plugin.cpp
 )
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_precompile_headers(${PROJECT_NAME} PRIVATE PCH.h)
-target_link_libraries(${PROJECT_NAME} PRIVATE SkyrimScripting.Spec)
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME SkyrimScripting.Spec)
-
-# TODO Shouldn't be necesary?
-target_link_libraries(${PROJECT_NAME} PRIVATE CommonLibSSE::CommonLibSSE)
 
 if(DEPLOY_MOD)
 	if(EXISTS "${DEPLOY_ROOT}")

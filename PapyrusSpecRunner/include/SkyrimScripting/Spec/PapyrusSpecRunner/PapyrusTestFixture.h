@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace SkyrimScripting::Spec::Runner {
+namespace SkyrimScripting::Spec::PapyrusSpecRunner {
 
     class PapyrusTestFixture {
         std::vector<std::string> runBeforeEachSpec_functionNames;
@@ -12,4 +12,4 @@ namespace SkyrimScripting::Spec::Runner {
         std::vector<std::string> runAfterWholeScript_functionNames;
         std::vector<std::string> individualfunctionNames;
     };
-}  // namespace SkyrimScripting::Spec::Runner
+}
