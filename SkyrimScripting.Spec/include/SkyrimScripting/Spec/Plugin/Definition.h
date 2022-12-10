@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SKSE/SKSE.h>
+
 #include "SkyrimScripting/Spec/Plugin/RedirectStandardOut.h"
 #include "SkyrimScripting/Spec/Plugin/Runtime.h"
 

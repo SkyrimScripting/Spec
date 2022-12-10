@@ -1,5 +1,7 @@
 #pragma once
 
+#include <RE/Skyrim.h>
+
 #include <atomic>
 
 #include "SkyrimScripting/Spec/Config.h"

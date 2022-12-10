@@ -1,5 +1,9 @@
 #pragma once
 
+// TODO consolidate with the other version of this please
+
+#include <SKSE/SKSE.h>
+
 namespace SkyrimScripting::Spec::Plugin {
 
 	void RedirectStdoutToFile() {

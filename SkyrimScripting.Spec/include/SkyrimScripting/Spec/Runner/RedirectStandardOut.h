@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SKSE/SKSE.h>
+
 namespace SkyrimScripting::Spec::Runner {
 
 	void RedirectStdoutToFile() {
