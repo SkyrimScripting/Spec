@@ -1,12 +1,12 @@
 #pragma once
 
 #include <filesystem>
-#include <set>
+#include <vector>
 
 namespace SkyrimScripting::Spec::PapyrusSpecRunner {
 
-    std::set<std::string> GetAllSpecScriptNames() {
-        std::set<std::string> names;
+    std::vector<std::string> GetAllSpecScriptNames() {
+        std::vector<std::string> names;
         return names;
     }
 }
