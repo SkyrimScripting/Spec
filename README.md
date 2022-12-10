@@ -2,11 +2,8 @@
 
 > Skyrim Testing Framework
 
-> Write tests in **Papyrus** for your mods!
->
-> Write tests your **C++ SKSE** plugins!  
-> _support for ANY C++ test framework_  
-> _built-in macros for GoogleTest, Catch2, doctest, and Bandit!_
+- Write tests in **Papyrus** for your mods!
+- Write tests in **C++** for your SKSE plugins!
+- Tests run **inside of Skyrim** to _truly_ prove your code works!
 
 ![Spec](Images/Spec_Dark.png)
-
