@@ -1,13 +1,10 @@
 #pragma once
 
-#include "SkyrimScripting/Spec/Config.h"
-#include "SkyrimScripting/Spec/GoogleTest/Macros.h"
-#include "SkyrimScripting/Spec/GoogleTest/SpecRunner.h"
-#include "SkyrimScripting/Spec/Internal/FunctionRunner.h"
-#include "SkyrimScripting/Spec/Plugin.h"
+// Setups up the main test runner to use GoogleTest
+#include "SkyrimScripting/Spec/GoogleTest/Setup.h"
 
-namespace SkyrimScripting::Spec::GoogleTest {
-    namespace {
-        Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = GoogleTest::RunSpecs; }};
-    }
-}
+// Include Macros for making it easier to use SkyrimScripting.Spec from GoogleTest!
+#include "SkyrimScripting/Spec/GoogleTest/Macros.h"
+
+// Include the main SKSE plugin
+#include "SkyrimScripting/Spec/Plugin.h"

@@ -1,14 +1,14 @@
-project(SkyrimScripting.Spec.Specs VERSION 0.0.1 LANGUAGES CXX)
+project(PapyrusSpecRunner VERSION 0.0.1 LANGUAGES CXX)
 
-find_path(BANDIT_INCLUDE_DIRS "bandit/adapters.h")
-find_path(SNOWHOUSE_INCLUDE_DIRS "snowhouse/assert.h")
-
-add_commonlibsse_plugin(${PROJECT_NAME} SOURCES tests.cpp)
-target_include_directories(${PROJECT_NAME} PRIVATE ${BANDIT_INCLUDE_DIRS})
-target_include_directories(${PROJECT_NAME} PRIVATE ${SNOWHOUSE_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE SkyrimScripting.Spec)
+add_commonlibsse_plugin(
+    ${PROJECT_NAME}
+    NAME SkyrimScripting.Spec
+    SOURCES plugin.cpp
+)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_precompile_headers(${PROJECT_NAME} PRIVATE PCH.h)
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME SkyrimScripting.Spec)
 
 if(DEPLOY_MOD)
 	if(EXISTS "${DEPLOY_ROOT}")

@@ -8,7 +8,9 @@
 
 #include "SkyrimScripting/Spec/Runner/PapyrusTestFixture.h"
 
-namespace SkyrimScripting::Spec::Runner {
+// TODO turn this into a class please :)
+//      then on cell load, PapyrusSpecRunner::RunAll() which is like GetSingleton()::RunAllPpayrusSpecs()
+namespace SkyrimScripting::Spec::PapyrusSpecRunner {
 
     class PapyrusFunctionCallback : public RE::BSScript::IStackCallbackFunctor {
         std::function<void()> callback;
