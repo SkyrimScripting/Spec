@@ -15,14 +15,14 @@
 #define it_on_game_start(desc, ...) it(std::format("SpecRunGameStart {}", desc), __VA_ARGS__)
 
 #define go_spec_immediate(lambdaWithDefinitions) \
-	_SPEC_ENABLE_SPECS_IMMEDIATE;                \
-	go_bandit([]() { describe("SpecRunImmediate", lambdaWithDefinitions); });
+    _SPEC_ENABLE_SPECS_IMMEDIATE;                \
+    go_bandit([]() { describe("SpecRunImmediate", lambdaWithDefinitions); });
 #define go_spec_on_plugins_load(lambdaWithDefinitions) \
-	_SPEC_ENABLE_SPECS_SKSE_LOADED;                    \
-	go_bandit([]() { describe("SpecRunPluginsLoaded", lambdaWithDefinitions); });
+    _SPEC_ENABLE_SPECS_SKSE_LOADED;                    \
+    go_bandit([]() { describe("SpecRunPluginsLoaded", lambdaWithDefinitions); });
 #define go_spec_on_mods_load(lambdaWithDefinitions) \
-	_SPEC_ENABLE_SPECS_MODS_LOADED;                 \
-	go_bandit([]() { describe("SpecRunModsLoaded", lambdaWithDefinitions); });
+    _SPEC_ENABLE_SPECS_MODS_LOADED;                 \
+    go_bandit([]() { describe("SpecRunModsLoaded", lambdaWithDefinitions); });
 #define go_spec_on_game_start(lambdaWithDefinitions) \
-	_SPEC_ENABLE_SPECS_GAME_STARTED;                 \
-	go_bandit([]() { describe("SpecRunGameStart", lambdaWithDefinitions); });
+    _SPEC_ENABLE_SPECS_GAME_STARTED;                 \
+    go_bandit([]() { describe("SpecRunGameStart", lambdaWithDefinitions); });

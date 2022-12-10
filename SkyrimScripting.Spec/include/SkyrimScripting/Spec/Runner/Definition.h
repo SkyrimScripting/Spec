@@ -7,10 +7,10 @@
 
 namespace SkyrimScripting::Spec::Runner {
 
-	SKSEPluginLoad(const SKSE::LoadInterface* skse) {
-		RedirectStdoutToFile();
-		SKSE::Init(skse);
-		RunSpecs();
-		return true;
-	}
+    SKSEPluginLoad(const SKSE::LoadInterface* skse) {
+        RedirectStdoutToFile();
+        SKSE::Init(skse);
+        RunSpecs();
+        return true;
+    }
 }

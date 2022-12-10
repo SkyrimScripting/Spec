@@ -7,7 +7,7 @@
 #include "SkyrimScripting/Spec/Plugin.h"
 
 namespace SkyrimScripting::Spec::GoogleTest {
-	namespace {
-		Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = GoogleTest::RunSpecs; }};
-	}
+    namespace {
+        Internal::FunctionRunner initSpecRunner{[]() { Config::TestCaseRunFunction = GoogleTest::RunSpecs; }};
+    }
 }
