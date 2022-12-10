@@ -7,6 +7,7 @@
 #define SPEC_EXIT_AFTER_RUN
 
 #include <SkyrimScripting/Spec/Bandit.h>
+#include <SkyrimScripting/Spec/Papyrus.h>
 
 constexpr auto INSTANCE_SPEC = "SpecExample_Spec";
 constexpr auto GLOBAL_SPEC = "SpecExample_Global_Spec";
@@ -17,10 +18,22 @@ spec_exit_after_tests;
 
 go_spec_immediate_describe("Papyrus Spec Runner", [](){
     it("can get list of all .pex scripts ending in _Spec.pex", [](){
-        // TODO set this up again as a unit test.
-        AssertThat(420, Equals(69));
+        auto scriptNames = SkyrimScripting::Spec::Papyrus::GetSpecScriptScriptNames();
+        AssertThat(scriptNames, Contains(INSTANCE_SPEC));
+        AssertThat(scriptNames, Contains(GLOBAL_SPEC));
     });
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -28,9 +41,6 @@ go_spec_immediate_describe("Papyrus Spec Runner", [](){
 // go_bandit([]() {
 //     // describe("SpecRunImmediate", []() {
 //     //     it("can get list of all .pex scripts ending in _Spec.pex", [&]() {
-//     //         auto scriptNames = SkyrimScripting::Spec::Runner::GetAllSpecScriptNames();
-//     //         AssertThat(scriptNames, Contains(INSTANCE_SPEC));
-//     //         AssertThat(scriptNames, Contains(GLOBAL_SPEC));
 //     //     });
 //     // });
 //     // describe("SpecRunModsLoaded", []() {
