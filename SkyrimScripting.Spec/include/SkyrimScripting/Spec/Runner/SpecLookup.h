@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <set>
 
 namespace SkyrimScripting::Spec::Runner {

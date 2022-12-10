@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace SkyrimScripting::Spec::Plugin {
 
 	namespace TestRunEvent {

@@ -1,10 +1,12 @@
 #pragma once
 
+#include <SKSE/SKSE.h>
 #include <Windows.h>
 
 #include "SkyrimScripting/Spec/Config.h"
 #include "SkyrimScripting/Spec/Plugin/GameLoadedEvent.h"
 #include "SkyrimScripting/Spec/Plugin/TestRunEvent.h"
+
 
 namespace SkyrimScripting::Spec::Plugin {
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <string>
+
 // TODO - clean me up + move me into a namespace (use macros to work with these from tests!) or make nicer or something
 namespace SkyrimScripting::Spec::Config {
 	bool AnySpecsRunImmediately = false;

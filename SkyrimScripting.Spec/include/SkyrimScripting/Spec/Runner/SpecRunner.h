@@ -1,5 +1,7 @@
 #pragma once
 
+#include <RE/Skyrim.h>
+
 #include <algorithm>
 #include <functional>
 #include <queue>
@@ -24,7 +26,8 @@ namespace SkyrimScripting::Spec::Runner {
 
 	std::string LowerCase(const std::string& text) {
 		std::string copy = text;
-		std::transform(copy.begin(), copy.end(), copy.begin(), [](unsigned char c) { return std::tolower(c); });
+		std::transform(copy.begin(), copy.end(), copy.begin(),
+					   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 		return copy;
 	}
 
@@ -33,7 +36,7 @@ namespace SkyrimScripting::Spec::Runner {
 		std::swap(PapyrusTestQueue_CurrentScriptFunctions, newQueue);
 	}
 
-	void AddScriptFunction(const std::string& functionName, bool isGlobal = true) {
+	void AddScriptFunction(const std::string& functionName) {  // , bool isGlobal = true) {
 		auto name = LowerCase(functionName);
 		if (name.starts_with("test")) {
 			//
@@ -60,7 +63,7 @@ namespace SkyrimScripting::Spec::Runner {
 		}
 	}
 
-	void RunPapyrusSpec(const std::string& scriptName) {}
+	void RunPapyrusSpec(const std::string&) {}
 
 	void RunPapyrusSpec() { RunPapyrusSpec(PapyrusTestQueue_CurrentScript); }
 
