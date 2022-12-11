@@ -34,19 +34,58 @@ endfunction()
 
 project(SkyrimScripting.Spec.Example.Catch2 VERSION 0.0.1 LANGUAGES CXX)
 
-find_package(Catch2 CONFIG REQUIRED)
+
+# add_catch2_spec_suite(
+#     ${PROJECT_NAME}
+#     MODS_FOLDER "C:/Users/mrowr/Dropbox/Skyrim Scripting/Projects/MO2 Mods Deploy Folder/"
+#     SOURCES tests.cpp
+# )
+
+
 
 add_commonlibsse_plugin(${PROJECT_NAME} SOURCES tests.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE SkyrimScripting.Spec)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/Examples/GoogleTest/PCH.h)
 
-# add_spec_suite(
-#     ${PROJECT_NAME}
-#     MODS_FOLDER "C:/Users/mrowr/Dropbox/Skyrim Scripting/Projects/MO2 Mods Deploy Folder/"
-#     SOURCES tests.cpp
-# )
+
+
+
+
+
+
+
+
+
+
+
+
+
+find_package(Catch2 CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Catch2::Catch2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if(DEPLOY_MOD)
 	if(EXISTS "${DEPLOY_ROOT}")

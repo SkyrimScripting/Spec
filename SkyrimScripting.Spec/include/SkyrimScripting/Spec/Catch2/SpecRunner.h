@@ -13,6 +13,13 @@ namespace SkyrimScripting::Spec::Catch2 {
         Catch2SessionWrapper& operator=(Catch2SessionWrapper&&) = delete;
     public:
         Catch::Session Catch2Session;
+
+        void ResetSession() {
+            std::cout << "Trying to reset Catch 2's session..." << std::endl;
+            Catch2Session.configData().testsOrTags.clear();
+            Catch2Session.configData().sectionsToRun.clear();
+        }
+
         static Catch2SessionWrapper& GetSingleton() {
             static Catch2SessionWrapper singleton;
             return singleton;
