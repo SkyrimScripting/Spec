@@ -40,6 +40,14 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
         return copy;
     }
 
+    void CallGlobalFunction(const std::string& scriptName, const std::string& functionName) {
+        auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+
+        RE::BSScript::ZeroFunctionArguments args;
+        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callbackPtr;
+        vm->DispatchStaticCall(scriptName, functionName, &args, callbackPtr);
+    }
+
     void ActuallyJustPrintOutTheNamesOfTestFunction(const std::string& scriptName) {
         auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
 
@@ -54,6 +62,8 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
             auto* function = globalFunctions[i].func.get();
             if (LowerCase(function->GetName().c_str()).starts_with(testPrefix)) {
                 std::cout << std::format("FOUND TEST FUNCTION: {}", function->GetName().c_str()) << std::endl;
+                CallGlobalFunction(scriptName, function->GetName().c_str());
+                return;
             }
         }
     }
