@@ -1,4 +1,4 @@
-scriptName SpecExample_Spec extends Specification
+scriptName SpecExample_Spec_xxx extends Specification
 {Example of a test extending Specification!}
 
 function Setup()

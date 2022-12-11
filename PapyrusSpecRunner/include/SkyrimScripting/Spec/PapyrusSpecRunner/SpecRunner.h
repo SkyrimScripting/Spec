@@ -26,12 +26,6 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
     std::queue<std::string> PapyrusTestQueue_AllScripts;
     std::queue<std::string> PapyrusTestQueue_CurrentScriptFunctions;
 
-    std::string LowerCase(const std::string& text) {
-        std::string copy = text;
-        std::transform(copy.begin(), copy.end(), copy.begin(),
-                       [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
-        return copy;
-    }
 
     void EmptyCurrentScriptFunctions() {
         std::queue<std::string> newQueue;

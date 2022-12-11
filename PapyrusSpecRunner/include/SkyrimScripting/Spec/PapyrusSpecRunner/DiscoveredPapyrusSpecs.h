@@ -1,8 +1,7 @@
 #pragma once
 
-#include <set>
+#include <vector>
 #include <string>
 
 namespace SkyrimScripting::Spec::PapyrusSpecRunner {
-    std::set<std::string> DiscoveredPapyrusSpecScriptNames;
 }
