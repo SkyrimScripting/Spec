@@ -5,6 +5,7 @@
 #include <format>
 #include <iostream>
 #include <string>
+#include <queue>
 #include <vector>
 #include <Windows.h>
 
@@ -16,6 +17,10 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
     constexpr auto GAME_START_SCRIPT_ENV_VAR_NAME = "SPEC_GAME_START_SCRIPT";
 
     std::vector<std::string> DiscoveredPapyrusSpecScriptNames;
+
+    std::string CurrentScriptName;
+    std::queue<std::string> FunctionNamesOnCurrentScriptToCall;
+    std::queue<std::string> SpecScriptNames;
 
     void TryRunGameStartScript() {
         auto* scriptPath = std::getenv(GAME_START_SCRIPT_ENV_VAR_NAME);
@@ -40,20 +45,50 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
         return copy;
     }
 
+    void CallAnotherFunction() {
+        // ...
+    }
+
+    void CallNextFunction();
+    void RunNextTestScript();
+
+    class PapyrusCallbackHandler : public RE::BSScript::IStackCallbackFunctor {
+        ~PapyrusCallbackHandler() override = default;
+        void operator()(RE::BSScript::Variable result) override {
+            CallNextFunction();
+        }
+        bool CanSave() const override { return false; }
+        void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) {}
+    };
+
     void CallGlobalFunction(const std::string& scriptName, const std::string& functionName) {
         auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
 
         RE::BSScript::ZeroFunctionArguments args;
-        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callbackPtr;
+
+        auto callbackPtr = RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor>{new PapyrusCallbackHandler()};
         vm->DispatchStaticCall(scriptName, functionName, &args, callbackPtr);
     }
 
-    void ActuallyJustPrintOutTheNamesOfTestFunction(const std::string& scriptName) {
+    void CallNextFunction() {
+        if (FunctionNamesOnCurrentScriptToCall.empty()) {
+            std::cout << "Run Next Test Script" << std::endl;
+            RunNextTestScript();
+        } else {
+            auto functionName = FunctionNamesOnCurrentScriptToCall.front();
+            std::cout << std::format("Running function {}", functionName) << std::endl;
+            FunctionNamesOnCurrentScriptToCall.pop();
+            CallGlobalFunction(CurrentScriptName, functionName);
+        }
+    }
+
+    void RunTestFunctionsOnNextScript() {
         auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
 
         RE::BSTSmartPointer<RE::BSScript::ObjectTypeInfo> typeInfoPtr;
-        vm->GetScriptObjectType(scriptName, typeInfoPtr);
+        vm->GetScriptObjectType(CurrentScriptName, typeInfoPtr);
 
+        // Populate the Queue with function names from this script
         std::string testPrefix = "test";
         auto* typeInfo = typeInfoPtr.get();
         uint32_t globalFunctionCount = typeInfo->GetNumGlobalFuncs();
@@ -61,16 +96,30 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
         for (uint32_t i = 0; i < globalFunctionCount; i++) {
             auto* function = globalFunctions[i].func.get();
             if (LowerCase(function->GetName().c_str()).starts_with(testPrefix)) {
-                std::cout << std::format("FOUND TEST FUNCTION: {}", function->GetName().c_str()) << std::endl;
-                CallGlobalFunction(scriptName, function->GetName().c_str());
-                return;
+                std::cout << std::format("Adding test function to queue: {}", function->GetName().c_str()) << std::endl;
+                FunctionNamesOnCurrentScriptToCall.emplace(function->GetName().c_str());
             }
+        }
+
+        // Kick off the first function from this script
+        CallNextFunction();
+    }
+
+    void RunNextTestScript() {
+        if (SpecScriptNames.empty()) {
+            std::cout << "No more scripts to run" << std::endl;
+        } else {
+            CurrentScriptName = SpecScriptNames.front();
+            std::cout << std::format("Running script {}", CurrentScriptName) << std::endl;
+            SpecScriptNames.pop();
+            RunTestFunctionsOnNextScript();
         }
     }
 
     void ActuallyJustCallOneFunctionPlease() {
-        auto scriptName = DiscoveredPapyrusSpecScriptNames.at(0);
-        ActuallyJustPrintOutTheNamesOfTestFunction(scriptName);
+        for (auto& scriptName : DiscoveredPapyrusSpecScriptNames)
+            SpecScriptNames.emplace(scriptName);
+        RunNextTestScript();
     }
 
     void RunAllTheSpecScripts() {
