@@ -36,7 +36,7 @@ namespace SkyrimScripting::Spec::Plugin {
 
     void RunSpecsAfterModsLoad() {
         if (!Config::RunSpecsAfterModsLoad()) return;
-        std::cout << "Runnings SpecRunModsLoaded tests" << std::endl;
+        std::cout << "Running SpecRunModsLoaded tests" << std::endl;
         RunSpecStage(SkyrimGameEvent::ModsLoaded);
         if (!Config::RunSpecsAfterGameStart()) TryExitSkyrim();
     }
@@ -65,11 +65,6 @@ namespace SkyrimScripting::Spec::Plugin {
     void RunSpecs() {
         if (!Config::AnySpecsConfiguredToRun()) {
             std::cout << "No tests defined." << std::endl;
-            std::cout << "Please add one or more of the following to your code:" << std::endl;
-            std::cout << "#define SPEC_RUN_IMMEDIATE" << std::endl;
-            std::cout << "#define SPEC_RUN_PLUGINS_LOADED" << std::endl;
-            std::cout << "#define SPEC_RUN_MOD_LOADED" << std::endl;
-            std::cout << "#define SPEC_RUN_GAME_STARTED" << std::endl;
             TryExitSkyrim();
             return;
         }
@@ -96,7 +91,7 @@ namespace SkyrimScripting::Spec::Plugin {
             auto eventSourceHolder = RE::ScriptEventSourceHolder::GetSingleton();
             auto eventSource = eventSourceHolder->GetEventSource<RE::TESCellFullyLoadedEvent>();
             auto* eventSink = new Internal::CellFullyLoadedEventSink([]() {
-                std::cout << "Runnings SpecRunGameStart tests" << std::endl;
+                std::cout << "Running SpecRunGameStart tests" << std::endl;
                 RunSpecStage(SkyrimGameEvent::GameStarted);
                 TryExitSkyrim();
             });
