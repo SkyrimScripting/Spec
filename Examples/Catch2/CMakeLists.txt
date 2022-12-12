@@ -1,6 +1,7 @@
 project(SkyrimScripting.Spec.Example.Catch2 VERSION 0.0.1 LANGUAGES CXX)
 
-find_package(Catch2 CONFIG REQUIRED)
+include(Specs)
+include(SKSE)
 
-add_executable(${PROJECT_NAME} tests.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE Catch2::Catch2)
+add_catch2_skse_specs(${PROJECT_NAME} SOURCES tests.cpp)
+target_skyrim_mods_root(${PROJECT_NAME} "${DEPLOY_ROOT}")

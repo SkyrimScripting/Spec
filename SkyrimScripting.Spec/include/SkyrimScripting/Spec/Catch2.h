@@ -1,1 +1,10 @@
 #pragma once
+
+// Setups up the main test runner to use GoogleTest
+#include "SkyrimScripting/Spec/Catch2/Setup.h"
+
+// Include Macros for making it easier to use SkyrimScripting.Spec from GoogleTest!
+#include "SkyrimScripting/Spec/Catch2/Macros.h"
+
+// Include the main SKSE plugin
+#include "SkyrimScripting/Spec/Plugin.h"

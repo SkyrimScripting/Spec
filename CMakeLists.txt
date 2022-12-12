@@ -5,13 +5,13 @@ project(SkyrimScripting.Spec.AllProjects VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
-option(DEPLOY_MOD "Copy mod .dll and resource into %SKYRIM_MODS_DEPLOY_ROOT%\\${PROJECT_NAME}" OFF)
-
-# Override <DEPLOY_ROOT> to set the path of a mod to deploy files to.
+# Set <DEPLOY_ROOT> to set the path of a mod to deploy files to.
+# Defaults to the value of environment variable SKYRIM_MODS_FOLDER
+set(DEPLOY_ROOT "$ENV{SKYRIM_MODS_FOLDER}")
 # The SKSE plugin files will be writen to <DEPLOY_ROOT>/<PROJECT_NAME>/SKSE/Plugins
-# You can use the environment variable SKYRIM_MODS_DEPLOY_ROOT to set a default <DEPLOY_ROOT>
-# set(DEPLOY_ROOT "C:/some/path/to/mod/path")
+# set(DEPLOY_ROOT "C:/some/path/to/mod/path") # <--- uncomment line to customize
 
 find_package(CommonLibSSE CONFIG REQUIRED)
 
