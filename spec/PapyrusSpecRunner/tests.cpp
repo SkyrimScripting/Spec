@@ -16,27 +16,22 @@ constexpr auto EVENT_TEST_FN = "JustCallTheSpecHelper";
 
 spec_exit_after_tests;
 
-go_spec_immediate_describe("Papyrus Spec Runner", [](){
-    it("can get list of all .pex scripts ending in _Spec.pex", [](){
+go_spec_immediate([]() {
+    it("can get list of all .pex scripts ending in _Spec.pex", []() {
         auto scriptNames = SkyrimScripting::Spec::Papyrus::GetSpecScriptScriptNames();
         AssertThat(scriptNames, Contains(INSTANCE_SPEC));
         AssertThat(scriptNames, Contains(GLOBAL_SPEC));
     });
 });
 
+// Really hard to test this without async...
+// Let's just use Papyrus tests for now.
+// We'll eventually use Spec Papyrus specs to test Spec :)
+// go_spec_on_game_start([](){
+//     it("Calling Assert ...");
+// });
 
-
-
-
-
-
-
-
-
-
-
-
-
+// go_spec_on_game_start_describe("Papyrus Spec Runner", []() {});
 
 // go_bandit([]() {
 //     // describe("SpecRunImmediate", []() {

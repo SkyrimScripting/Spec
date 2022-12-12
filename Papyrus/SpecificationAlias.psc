@@ -1,0 +1,1 @@
+scriptName SpecificationAlias extends Alias

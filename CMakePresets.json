@@ -3,7 +3,7 @@
     "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
     "configurePresets": [
         {
-            "name": "basePreset",
+            "name": "base",
             "hidden": true,
             "generator": "Visual Studio 17 2022",
             "architecture": { "value": "x64", "strategy": "external" },
@@ -16,22 +16,38 @@
             }
         },
         {
+            "name": "clang",
+            "hidden": true,
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "CMAKE_CXX_FLAGS_DEBUG": "/MTd",
+                "CMAKE_CXX_FLAGS": "/std:c++20 /permissive- /EHsc -Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -D__cpp_lib_char8_t -D__cpp_consteval -D__cpp_lib_format -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS -DCMAKE_EXPORT_COMPILE_COMMANDS"
+            }
+        },
+        {
             "name": "debug",
-            "inherits": ["basePreset"],
+            "inherits": ["base"],
             "displayName": "Debug",
             "binaryDir": "${sourceDir}/build/Debug",
             "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Debug" } }
         },
         {
             "name": "release",
-            "inherits": ["basePreset"],
+            "inherits": ["base"],
             "displayName": "Release",
             "binaryDir": "${sourceDir}/build/Release",
             "cacheVariables": { "CMAKE_BUILD_TYPE": { "type": "STRING", "value": "Release" } }
+        },
+        {
+            "name": "clang-debug",
+            "inherits": ["clang", "debug"],
+            "displayName": "Clang Debug"
         }
     ],
     "buildPresets": [
         { "name": "debug-buildPreset", "configurePreset": "debug", "displayName": "Debug" },
-        { "name": "release-buildPreset", "configurePreset": "release", "displayName": "Release" }
+        { "name": "release-buildPreset", "configurePreset": "release", "displayName": "Release" },
+        { "name": "clang-debug-buildPreset", "configurePreset": "clang-debug", "displayName": "Clang Debug" }
     ]
 }

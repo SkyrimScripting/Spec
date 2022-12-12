@@ -27,7 +27,7 @@
     _SPEC_ENABLE_SPECS_GAME_STARTED;                 \
     go_bandit([]() { describe("SpecRunGameStart", lambdaWithDefinitions); });
 
-#define go_spec_immediate_describe(desc, ...) go_spec_immediate([](){ describe(desc, __VA_ARGS__); });
-#define go_spec_on_plugins_load_describe(desc, ...) go_spec_on_plugins_load([](){ describe(desc, __VA_ARGS__); });
-#define go_spec_on_mods_load_describe(desc, ...) go_spec_on_mods_load([](){ describe(desc, __VA_ARGS__); });
-#define go_spec_on_game_start_describe(desc, ...) go_spec_on_game_start([](){ describe(desc, __VA_ARGS__); });
+#define go_spec_immediate_describe(desc, ...) go_spec_immediate([]() { describe(desc, __VA_ARGS__); });
+#define go_spec_on_plugins_load_describe(desc, ...) go_spec_on_plugins_load([]() { describe(desc, __VA_ARGS__); });
+#define go_spec_on_mods_load_describe(desc, ...) go_spec_on_mods_load([]() { describe(desc, __VA_ARGS__); });
+#define go_spec_on_game_start_describe(desc, ...) go_spec_on_game_start([]() { describe(desc, __VA_ARGS__); });
