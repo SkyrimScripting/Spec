@@ -18,6 +18,5 @@ set(DEPLOY_ROOT "$ENV{SKYRIM_MODS_FOLDER}")
 find_package(CommonLibSSE CONFIG REQUIRED)
 
 add_subdirectory(SkyrimScripting.Spec)
-add_subdirectory(PapyrusSpecRunner)
+add_subdirectory(SkyrimScripting.Spec.Papyrus)
 add_subdirectory(Examples)
-add_subdirectory(spec)

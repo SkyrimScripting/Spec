@@ -1,18 +1,37 @@
 #pragma once
 
-#include <SKSE/SKSE.h>
+// One file to rule them all! Just kidding, it's only during prototyping...
 
-#include <format>
-#include <iostream>
-#include <string>
-#include <queue>
-#include <vector>
+#include <RE/Skyrim.h>
+#include <SKSE/SKSE.h>
 #include <Windows.h>
 
-#include <SkyrimScripting/Spec/Papyrus.h>
-#include <SkyrimScripting/Spec/Internal/CellFullyLoadedEventSink.h>
+#include <atomic>
+#include <filesystem>
+#include <format>
+#include <functional>
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
 
-namespace SkyrimScripting::Spec::PapyrusSpecRunner {
+#include "SkyrimScripting/Spec/Papyrus/PapyrusInterface.h"
+
+namespace SkyrimScripting::Spec::Papyrus {
+
+    class CellFullyLoadedEventSink : public RE::BSTEventSink<RE::TESCellFullyLoadedEvent> {
+        std::function<void()> callback;
+        std::atomic<bool> loaded = false;
+
+    public:
+        explicit CellFullyLoadedEventSink(std::function<void()> callback) : callback(callback) {}
+
+        RE::BSEventNotifyControl ProcessEvent(const RE::TESCellFullyLoadedEvent*,
+                                              RE::BSTEventSource<RE::TESCellFullyLoadedEvent>*) override {
+            if (!loaded.exchange(true)) callback();
+            return RE::BSEventNotifyControl::kContinue;
+        }
+    };
 
     constexpr auto GAME_START_SCRIPT_ENV_VAR_NAME = "SPEC_GAME_START_SCRIPT";
 
@@ -54,11 +73,9 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
 
     class PapyrusCallbackHandler : public RE::BSScript::IStackCallbackFunctor {
         ~PapyrusCallbackHandler() override = default;
-        void operator()(RE::BSScript::Variable result) override {
-            CallNextFunction();
-        }
+        void operator()(RE::BSScript::Variable result) override { CallNextFunction(); }
         bool CanSave() const override { return false; }
-        void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) {}
+        void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
     };
 
     void CallGlobalFunction(const std::string& scriptName, const std::string& functionName) {
@@ -117,19 +134,24 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
     }
 
     void ActuallyJustCallOneFunctionPlease() {
-        for (auto& scriptName : DiscoveredPapyrusSpecScriptNames)
-            SpecScriptNames.emplace(scriptName);
+        for (auto& scriptName : DiscoveredPapyrusSpecScriptNames) SpecScriptNames.emplace(scriptName);
         RunNextTestScript();
     }
 
-    void RunAllTheSpecScripts() {
-        ActuallyJustCallOneFunctionPlease();
+    void RunAllTheSpecScripts() { ActuallyJustCallOneFunctionPlease(); }
+
+    std::vector<std::string> GetSpecScriptScriptNames() {
+        std::vector<std::string> scriptNames;
+        for (auto& file : std::filesystem::directory_iterator("Data/Scripts"))
+            if (file.path().string().ends_with("_Spec.pex"))
+                scriptNames.emplace_back(file.path().stem().string().c_str());
+        return scriptNames;
     }
 
     SKSEPluginLoad(const SKSE::LoadInterface* skse) {
         RedirectStdoutToFile();
         SKSE::Init(skse);
-        DiscoveredPapyrusSpecScriptNames = Papyrus::GetSpecScriptScriptNames();
+        DiscoveredPapyrusSpecScriptNames = GetSpecScriptScriptNames();
         if (DiscoveredPapyrusSpecScriptNames.empty()) {
             std::cout << "No Papyrus specs discovered" << std::endl;
             std::cout << "For auto-detection of Papyrus specs, please name your Papyrus spec *_Spec.psc" << std::endl;
@@ -140,19 +162,21 @@ namespace SkyrimScripting::Spec::PapyrusSpecRunner {
             for (auto& scriptName : DiscoveredPapyrusSpecScriptNames) {
                 std::cout << std::format("- {}", scriptName) << std::endl;
             }
-            SKSE::GetMessagingInterface()->RegisterListener([](SKSE::MessagingInterface::Message* message){
-                if (message->type == SKSE::MessagingInterface::kDataLoaded)
+            SKSE::GetMessagingInterface()->RegisterListener([](SKSE::MessagingInterface::Message* message) {
+                if (message->type == SKSE::MessagingInterface::kDataLoaded) {
+                    // TODO test if this can run immediately before any messages or else during kPostLoad out of
+                    // curiosity
+                    SKSE::GetPapyrusInterface()->Register(PapyrusInterface::BIND);
+                    // Run script!
                     TryRunGameStartScript();
+                }
             });
             auto eventSourceHolder = RE::ScriptEventSourceHolder::GetSingleton();
             auto eventSource = eventSourceHolder->GetEventSource<RE::TESCellFullyLoadedEvent>();
-            auto* eventSink = new Internal::CellFullyLoadedEventSink([]() {
-                RunAllTheSpecScripts();
-            });
+            auto* eventSink = new CellFullyLoadedEventSink([]() { RunAllTheSpecScripts(); });
             eventSource->AddEventSink(eventSink);
         }
 
         return true;
     }
 }
-        

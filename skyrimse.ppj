@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<PapyrusProject xmlns="PapyrusProject.xsd" Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Papyrus/Scripts">
+<PapyrusProject xmlns="PapyrusProject.xsd" Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="build/Papyrus">
     <!--
         These variables contain hard-coded paths because the VS Code Papyrus extension does not support environment variables: https://github.com/joelday/papyrus-lang/issues/145
         Please change the values of these variables to point to folders on your PC.
@@ -20,18 +20,19 @@
         <Variable Name="Imports" Value="C:\Modding\PapyrusImports" />
     </Variables>
     <Imports>
-        <Import>./Papyrus</Import>
-        <Import>./spec/PapyrusSpecRunner/Papyrus</Import>
+        <Import>./SkyrimScripting.Spec.Papyrus/PapyrusScripts</Import>
         <Import>@Imports\SKSE\Scripts\Source</Import>
         <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Scripts\Source</Import>
     </Imports>
     <Folders>
-        <Folder>./Papyrus</Folder>
-        <Folder>./spec/PapyrusSpecRunner/Papyrus</Folder>
+        <Folder>./SkyrimScripting.Spec.Papyrus/PapyrusScripts</Folder>
     </Folders>
+    <PreBuildEvent Description="Delete all previously built scripts" UseInBuild="true">
+        <Command>(if exist .\Build\Papyrus rmdir /s /q .\Build\Papyrus)</Command>
+    </PreBuildEvent>
     <PostBuildEvent Description="Deploy scripts to Mods folder" UseInBuild="true">
         <Command>(if exist "@Mods\@ModName" rmdir /s /q "@Mods\@ModName")</Command>
         <Command>mkdir "@Mods\@ModName\Scripts"</Command>
-        <Command>xcopy /e .\Papyrus\Scripts "@Mods\@ModName\Scripts"</Command>
+        <Command>xcopy /e .\Build\Papyrus "@Mods\@ModName\Scripts"</Command>
     </PostBuildEvent>
 </PapyrusProject>
