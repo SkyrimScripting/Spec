@@ -2,7 +2,5 @@
 
 namespace SkyrimScripting::Spec::Papyrus {
 
-    class Foo {
-        void FooB() {}
-    };
+    class TestFixture {};
 }

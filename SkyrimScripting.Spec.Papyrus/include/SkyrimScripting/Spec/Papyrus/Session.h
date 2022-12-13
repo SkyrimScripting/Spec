@@ -2,5 +2,5 @@
 
 namespace SkyrimScripting::Spec::Papyrus {
 
-    class TestSuite {};
+    class Session {};
 }
