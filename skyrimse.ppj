@@ -26,6 +26,7 @@
     </Imports>
     <Folders>
         <Folder>./SkyrimScripting.Spec.Papyrus/PapyrusScripts</Folder>
+        <Folder>./spec/Papyrus</Folder>
     </Folders>
     <PreBuildEvent Description="Delete all previously built scripts" UseInBuild="true">
         <Command>(if exist .\Build\Papyrus rmdir /s /q .\Build\Papyrus)</Command>

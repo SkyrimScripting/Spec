@@ -2,19 +2,15 @@
 
 #include <SKSE/SKSE.h>
 
-namespace SkyrimScripting::Spec::Papyrus {
+#include "SkyrimScripting/Spec/Papyrus/GameSession.h"
+#include "SkyrimScripting/Spec/Papyrus/Logging.h"
 
-    void RedirectStdoutToFile() {
-        auto stdout_path = SKSE::log::log_directory();
-        *stdout_path /= fmt::format("{}.test.log", SKSE::PluginDeclaration::GetSingleton()->GetName());
-        freopen(stdout_path->string().c_str(), "w", stdout);
-    }
+namespace SkyrimScripting::Spec::Papyrus {
 
     SKSEPluginLoad(const SKSE::LoadInterface* skse) {
         SKSE::Init(skse);
-
-        RedirectStdoutToFile();
-
+        SetupLog();
+        GameSession::GetSingleton().Initialize();
         return true;
     }
 }
