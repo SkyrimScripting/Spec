@@ -1,14 +1,18 @@
 #pragma once
 
 #include <RE/Skyrim.h>
+#include <Windows.h>
 
 #include <atomic>
 #include <functional>
 
 #include "SkyrimScripting/Spec/Papyrus/Logger.h"
+#include "SkyrimScripting/Spec/Papyrus/SpecScriptDiscovery.h"
 #include "SkyrimScripting/Spec/Papyrus/TestEnvironment.h"
 
 namespace SkyrimScripting::Spec::Papyrus {
+
+    constexpr auto GAME_START_SCRIPT_ENV_VAR_NAME = "SPEC_GAME_START_SCRIPT";
 
     class GameSession {
         class GameStartedEventListener : public RE::BSTEventSink<RE::TESCellFullyLoadedEvent> {
@@ -31,20 +35,15 @@ namespace SkyrimScripting::Spec::Papyrus {
         GameSession(GameSession&&) = delete;
         GameSession& operator=(const GameSession&) = delete;
         GameSession& operator=(GameSession&&) = delete;
+
         std::atomic<bool> _initialized;
         std::atomic<bool> _specsHaveBeenRun;
+
         TestEnvironment _testEnvironment;
         GameStartedEventListener _gameStartedEventListener;
 
-    public:
-        static GameSession& GetSingleton() {
-            static GameSession singleton;
-            return singleton;
-        }
-
         void RunSpecs() {
-            _testEnvironment.Initialize();
-            _testEnvironment.RunSpecs();
+            _testEnvironment.RunSpecScripts(std::move(SpecScriptDiscovery::DiscoverPapyrusScriptNames()));
         }
 
         void RunSpecsIfNotAlreadyRun() {
@@ -58,8 +57,29 @@ namespace SkyrimScripting::Spec::Papyrus {
                 &_gameStartedEventListener);
         }
 
+        void ListenForMainMenu() {
+            SKSE::GetMessagingInterface()->RegisterListener([](SKSE::MessagingInterface::Message* message) {
+                if (message->type == SKSE::MessagingInterface::kDataLoaded) {
+                    auto* scriptPath = std::getenv(GAME_START_SCRIPT_ENV_VAR_NAME);
+                    if (scriptPath) {
+                        logger::info("Running game start script '{}'", scriptPath);
+                        WinExec(scriptPath, SW_HIDE);
+                    }
+                }
+            });
+        }
+
+    public:
+        static GameSession& GetSingleton() {
+            static GameSession singleton;
+            return singleton;
+        }
+
         void Initialize() {
-            if (!_initialized.exchange(true)) ListenForGameStart();
+            if (!_initialized.exchange(true)) {
+                ListenForMainMenu();
+                ListenForGameStart();
+            }
         }
     };
 }

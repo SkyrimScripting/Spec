@@ -2,7 +2,6 @@
 #include "SpecHelper.h"
 #include "specs.h"
 #include "SkyrimScripting/Spec/Papyrus/Assertions.Spec.h"
-#include "SkyrimScripting/Spec/Papyrus/GameSession.Spec.h"
 #include "SkyrimScripting/Spec/Papyrus/Plugin.Spec.h"
 #include "SkyrimScripting/Spec/Papyrus/SpecScriptDiscovery.Spec.h"
 #include "SkyrimScripting/Spec/Papyrus/Test/MockPapyrusVM.Spec.h"
