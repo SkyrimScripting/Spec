@@ -1,13 +1,14 @@
 {
-    "version": 2,
-    "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+    "version": 3,
     "configurePresets": [
         {
             "name": "base",
             "hidden": true,
-            "generator": "Visual Studio 17 2022",
+            "generator": "Ninja",
             "architecture": { "value": "x64", "strategy": "external" },
             "cacheVariables": {
+				"CMAKE_CXX_COMPILER": "cl.exe",
+                "CMAKE_MAKE_PROGRAM": "ninja",
                 "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS",
                 "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
                 "VCPKG_TARGET_TRIPLET": "x64-windows-static-md",
@@ -44,10 +45,5 @@
             "inherits": ["clang", "debug"],
             "displayName": "Clang Debug"
         }
-    ],
-    "buildPresets": [
-        { "name": "debug-buildPreset", "configurePreset": "debug", "displayName": "Debug" },
-        { "name": "release-buildPreset", "configurePreset": "release", "displayName": "Release" },
-        { "name": "clang-debug-buildPreset", "configurePreset": "clang-debug", "displayName": "Clang Debug" }
     ]
 }
