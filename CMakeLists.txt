@@ -1,8 +1,7 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25)
 
 project(SkyrimScripting.Spec.AllProjects VERSION 0.0.1 LANGUAGES CXX)
 
-# REMOVE THESE:
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
