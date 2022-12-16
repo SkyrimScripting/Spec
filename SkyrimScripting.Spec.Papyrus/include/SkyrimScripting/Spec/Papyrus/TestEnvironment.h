@@ -14,9 +14,11 @@ namespace SkyrimScripting::Spec::Papyrus {
 
     public:
         void RunSpecScripts(std::vector<std::string> scriptNames) {
+            logger::info("RunSpecScripts");
             TestSuite suite;
             for (auto& scriptName : scriptNames) suite.AddSpecScript(scriptName);
-            _testSuites.emplace_back(std::move(suite));
+            // _testSuites.emplace_back(std::move(suite));
+            _testSuites.emplace_back(suite);
             TestSuiteRunner::Run(suite);
         }
     };

@@ -4,9 +4,11 @@
 #include <iostream>
 #include <string>
 
+#include "SkyrimScripting/Spec/Papyrus/Logger.h"
+
 namespace SkyrimScripting::Spec::Papyrus::Assertions {
 
     void Assert(bool assertPassed, const std::string& failureMessage) {
-        if (!assertPassed) std::cout << std::format("FAIL! '{}'", failureMessage) << std::endl;
+        if (!assertPassed) logger::info("FAIL! '{}'", failureMessage);
     }
 }

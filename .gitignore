@@ -4,4 +4,4 @@ cmake-build*
 .vs
 *.pdb
 .tmp
-clangd/.cache
+.cache

@@ -21,6 +21,7 @@
     </Variables>
     <Imports>
         <Import>./SkyrimScripting.Spec.Papyrus/PapyrusScripts</Import>
+        <Import>./spec/Papyrus</Import>
         <Import>@Imports\SKSE\Scripts\Source</Import>
         <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Scripts\Source</Import>
     </Imports>
@@ -28,9 +29,9 @@
         <Folder>./SkyrimScripting.Spec.Papyrus/PapyrusScripts</Folder>
         <Folder>./spec/Papyrus</Folder>
     </Folders>
-    <PreBuildEvent Description="Delete all previously built scripts" UseInBuild="true">
+    <!-- <PreBuildEvent Description="Delete all previously built scripts" UseInBuild="true">
         <Command>(if exist .\Build\Papyrus rmdir /s /q .\Build\Papyrus)</Command>
-    </PreBuildEvent>
+    </PreBuildEvent> -->
     <PostBuildEvent Description="Deploy scripts to Mods folder" UseInBuild="true">
         <Command>(if exist "@Mods\@ModName" rmdir /s /q "@Mods\@ModName")</Command>
         <Command>mkdir "@Mods\@ModName\Scripts"</Command>

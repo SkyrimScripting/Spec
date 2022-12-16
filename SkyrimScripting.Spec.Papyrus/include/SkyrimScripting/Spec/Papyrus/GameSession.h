@@ -43,6 +43,7 @@ namespace SkyrimScripting::Spec::Papyrus {
         GameStartedEventListener _gameStartedEventListener;
 
         void RunSpecs() {
+            logger::info("RunSpecs");
             _testEnvironment.RunSpecScripts(std::move(SpecScriptDiscovery::DiscoverPapyrusScriptNames()));
         }
 
