@@ -1,1 +1,1 @@
-add_subdirectory(PapyrusSpecRunner)
+add_subdirectory(unit)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <catch2/catch_session.hpp>
+#include <iostream>
 
 namespace SkyrimScripting::Spec::Catch2 {
 
@@ -11,6 +12,7 @@ namespace SkyrimScripting::Spec::Catch2 {
         Catch2SessionWrapper(Catch2SessionWrapper&&) = delete;
         Catch2SessionWrapper& operator=(const Catch2SessionWrapper&) = delete;
         Catch2SessionWrapper& operator=(Catch2SessionWrapper&&) = delete;
+
     public:
         Catch::Session Catch2Session;
 

@@ -1,0 +1,12 @@
+// GENERATED - DO NOT EDIT
+#include "SpecHelper.h"
+#include "specs.h"
+#include "SkyrimScripting/Spec/Papyrus/Assertions.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/Plugin.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/SpecScriptDiscovery.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/Test/MockPapyrusVM.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/TestCase.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/TestEnvironment.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/TestFixture.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/TestSpec.Spec.h"
+#include "SkyrimScripting/Spec/Papyrus/TestSuite.Spec.h"
